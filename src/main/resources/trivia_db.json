@@ -22,6 +22,9 @@
         {"question": "Which block allows you to change your respawn point?", "answer": "Bed"},
         {"question": "Which country is famous for its carnival and samba?", "answer": "Brazil"},
         {"question": "What is the smallest ocean in the world?", "answer": "The Arctic"},
+        {"question": "Which mob has the ability to teleport?", "answer": "Enderman"},
+        {"question": "Who founded Microsoft?", "answer": "Bill Gates"},
+        {"question": "Which famous French leader was crowned emperor in 1804?", "answer": "Napoleon"},
 
         {"question": "What is the capital of Japan?", "answer": "Tokyo"},
         {"question": "What is the capital of Italy?", "answer": "Rome"},

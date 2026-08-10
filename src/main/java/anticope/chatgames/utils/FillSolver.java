@@ -1,6 +1,5 @@
 package anticope.chatgames.utils;
 
-import anticope.chatgames.ChatGamesAddon;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +15,7 @@ public class FillSolver {
     }
 
     private static void loadWords() {
-        try (InputStream is = ChatGamesAddon.class.getResourceAsStream("/words.txt")) {
+        try (InputStream is = FillSolver.class.getResourceAsStream("/words.txt")) {
             if (is != null) {
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
                     String line;
@@ -34,7 +33,7 @@ public class FillSolver {
     public static String solveFill(String input) {
         if (input == null || !input.contains("_")) return null;
 
-        // Clean input to get the blank pattern (e.g. "__dybug" or "b_n_n_")
+        // Find the token with underscores (e.g. "__dybug" or "b_n_n_")
         String[] tokens = input.split("\\s+");
         String pattern = null;
         for (String token : tokens) {
@@ -59,11 +58,8 @@ public class FillSolver {
                     }
                 }
                 if (match) {
-                    // Match capitalization
-                    if (Character.isUpperCase(pattern.charAt(0)) || (input.length() > 0 && Character.isUpperCase(input.charAt(0)))) {
-                        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
-                    }
-                    return Character.toUpperCase(word.charAt(0)) + word.substring(1);
+                    // Always capitalize first letter to match server format
+                    return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
                 }
             }
         }

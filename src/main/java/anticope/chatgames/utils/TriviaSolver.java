@@ -31,7 +31,10 @@ public class TriviaSolver {
                     for (JsonElement elem : triviaArray) {
                         JsonObject obj = elem.getAsJsonObject();
                         if (obj.has("question") && obj.has("answer")) {
-                            TRIVIA_DB.put(clean(obj.get("question").getAsString()), obj.get("answer").getAsString());
+                            String q = clean(obj.get("question").getAsString());
+                            if (!q.isEmpty()) {
+                                TRIVIA_DB.put(q, obj.get("answer").getAsString());
+                            }
                         }
                     }
                 }
@@ -69,6 +72,7 @@ public class TriviaSolver {
     }
 
     private static String clean(String input) {
+        if (input == null) return "";
         return input.replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase().trim();
     }
 
@@ -76,15 +80,23 @@ public class TriviaSolver {
         if (question == null) return null;
         String cleanQ = clean(question);
         
+        // Prevent false positive matching on short/empty strings
+        if (cleanQ.length() < 10) return null;
+
         // Exact match
         if (TRIVIA_DB.containsKey(cleanQ)) {
             return TRIVIA_DB.get(cleanQ);
         }
 
-        // Substring / Fuzzy match
-        for (Map.Entry<String, String> entry : TRIVIA_DB.entrySet()) {
-            if (cleanQ.contains(entry.getKey()) || entry.getKey().contains(cleanQ)) {
-                return entry.getValue();
+        // Substring match ONLY for long questions (>= 15 chars) to avoid false positives
+        if (cleanQ.length() >= 15) {
+            for (Map.Entry<String, String> entry : TRIVIA_DB.entrySet()) {
+                String dbKey = entry.getKey();
+                if (dbKey.length() >= 15) {
+                    if (cleanQ.contains(dbKey) || dbKey.contains(cleanQ)) {
+                        return entry.getValue();
+                    }
+                }
             }
         }
 
@@ -94,6 +106,7 @@ public class TriviaSolver {
     public static String solveSort(String scrambled) {
         if (scrambled == null) return null;
         scrambled = scrambled.trim();
+        if (scrambled.isEmpty()) return null;
 
         // 1. Direct DB lookup
         if (SORT_DB.containsKey(scrambled)) {
@@ -109,7 +122,6 @@ public class TriviaSolver {
                 char[] wordChars = word.toLowerCase().toCharArray();
                 Arrays.sort(wordChars);
                 if (Arrays.equals(targetChars, wordChars)) {
-                    // Match original casing if scrambled starts with uppercase
                     if (Character.isUpperCase(scrambled.charAt(0))) {
                         return Character.toUpperCase(word.charAt(0)) + word.substring(1);
                     }

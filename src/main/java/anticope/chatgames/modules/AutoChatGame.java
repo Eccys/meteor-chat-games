@@ -105,6 +105,8 @@ public class AutoChatGame extends Module {
     private long lastBufferTime = 0;
     private String lastAnswerSent = "";
     private long lastAnswerTime = 0;
+    private String lastProcessedText = "";
+    private long lastProcessedTime = 0;
 
     public AutoChatGame() {
         super(ChatGamesAddon.CATEGORY, "auto-chat-game", "Automatically solves server chat games with customizable delay and humanized randomness.");
@@ -118,6 +120,20 @@ public class AutoChatGame extends Module {
 
         long now = System.currentTimeMillis();
 
+        // 1. De-duplicate event calls for identical text within 800ms
+        if (text.equals(lastProcessedText) && (now - lastProcessedTime) < 800) {
+            return;
+        }
+        lastProcessedText = text;
+        lastProcessedTime = now;
+
+        // 2. Ignore server outcome broadcasts & system messages
+        if (text.contains("TIME EXPIRED") || text.contains("WINNER") || 
+            text.contains("CORRECT ANSWER WAS") || text.contains("AWARDED A PRIZE") ||
+            text.contains("FIRST TO RESPOND") || text.contains("Crates") || text.contains("WARPS")) {
+            return;
+        }
+
         // Reset buffer if more than 3 seconds elapsed
         if (now - lastBufferTime > 3000) {
             messageBuffer.clear();
@@ -128,8 +144,14 @@ public class AutoChatGame extends Module {
         String answer = null;
         String gameType = null;
 
-        // 1. SORT / UNSCRAMBLE
-        if (solveSort.get()) {
+        // A. VARIABLE (Checked FIRST when equation lines are present)
+        if (solveVariable.get() && (text.contains("=") && (text.contains("+") || text.contains("x")))) {
+            answer = VariableSolver.solveVariable(messageBuffer);
+            if (answer != null) gameType = "Variable";
+        }
+
+        // B. SORT / UNSCRAMBLE
+        if (answer == null && solveSort.get()) {
             Matcher m = SORT_PATTERN.matcher(text);
             if (m.find()) {
                 String scrambled = m.group(1);
@@ -138,7 +160,7 @@ public class AutoChatGame extends Module {
             }
         }
 
-        // 2. REVERSE
+        // C. REVERSE
         if (answer == null && solveReverse.get()) {
             Matcher m = REVERSE_PATTERN.matcher(text);
             if (m.find()) {
@@ -148,7 +170,7 @@ public class AutoChatGame extends Module {
             }
         }
 
-        // 3. MATH
+        // D. MATH
         if (answer == null && solveMath.get()) {
             Matcher m = MATH_PATTERN.matcher(text);
             if (m.find()) {
@@ -158,7 +180,7 @@ public class AutoChatGame extends Module {
             }
         }
 
-        // 4. WRITE / TYPE
+        // E. WRITE / TYPE
         if (answer == null) {
             Matcher m = WRITE_PATTERN.matcher(text);
             if (m.find()) {
@@ -167,34 +189,24 @@ public class AutoChatGame extends Module {
             }
         }
 
-        // 5. TRIVIA
+        // F. TRIVIA (Checked LAST, requires quoted string of length >= 10 or exact trivia question match)
         if (answer == null && solveTrivia.get()) {
             if (text.contains("\"")) {
                 int firstQuote = text.indexOf('"');
                 int lastQuote = text.lastIndexOf('"');
                 if (firstQuote != -1 && lastQuote > firstQuote) {
                     String question = text.substring(firstQuote + 1, lastQuote).trim();
-                    if (question.length() > 5 && !question.contains("seconds to")) {
+                    if (question.length() >= 10 && !question.contains("seconds to") && !question.contains("calculate") && !question.contains("sort")) {
                         answer = TriviaSolver.solveTrivia(question);
                         if (answer != null) gameType = "Trivia";
                     }
                 }
             }
-            if (answer == null) {
-                answer = TriviaSolver.solveTrivia(text);
-                if (answer != null) gameType = "Trivia";
-            }
-        }
-
-        // 6. VARIABLE
-        if (answer == null && solveVariable.get() && (text.contains("CHATGAMES") || text.contains("VARIABLE"))) {
-            answer = VariableSolver.solveVariable(messageBuffer);
-            if (answer != null) gameType = "Variable";
         }
 
         // Dispatch Answer
         if (answer != null && !answer.isEmpty()) {
-            // Prevent duplicate spam within 5 seconds
+            // Prevent duplicate answer spam within 5 seconds
             if (answer.equalsIgnoreCase(lastAnswerSent) && (now - lastAnswerTime) < 5000) {
                 return;
             }

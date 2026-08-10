@@ -12,8 +12,15 @@ import meteordevelopment.orbit.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AutoChatGame extends Module {
+    private static final Pattern SORT_PATTERN = Pattern.compile("sort (?:the )?word\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type (?:the )?word|reverse (?:the )?word)\\s+\"([^\"]+)\"\\s+backwards|reverse (?:the )?word\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern MATH_PATTERN = Pattern.compile("calculate\\s+\"([^\"]+)\"|calculate\\s+([0-9\\s+\\-*/]+)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern WRITE_PATTERN = Pattern.compile("type (?:the )?(?:word|sentence)\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgSolvers = settings.createGroup("Solvers");
 
@@ -118,70 +125,71 @@ public class AutoChatGame extends Module {
         lastBufferTime = now;
         messageBuffer.add(text);
 
-        // Process single line and buffer
         String answer = null;
         String gameType = null;
 
-        // 1. TRIVIA
-        if (solveTrivia.get() && text.contains("\"")) {
-            int firstQuote = text.indexOf('"');
-            int lastQuote = text.lastIndexOf('"');
-            if (firstQuote != -1 && lastQuote > firstQuote) {
-                String question = text.substring(firstQuote + 1, lastQuote).trim();
-                if (question.length() > 5 && !question.contains("seconds to")) {
-                    answer = TriviaSolver.solveTrivia(question);
-                    if (answer != null) gameType = "Trivia";
-                }
-            }
-        }
-
-        // 2. SORT / UNSCRAMBLE
-        if (answer == null && solveSort.get() && text.toLowerCase().contains("sort the word")) {
-            int firstQuote = text.indexOf('"');
-            int lastQuote = text.lastIndexOf('"');
-            if (firstQuote != -1 && lastQuote > firstQuote) {
-                String scrambled = text.substring(firstQuote + 1, lastQuote).trim();
+        // 1. SORT / UNSCRAMBLE
+        if (solveSort.get()) {
+            Matcher m = SORT_PATTERN.matcher(text);
+            if (m.find()) {
+                String scrambled = m.group(1);
                 answer = TriviaSolver.solveSort(scrambled);
                 if (answer != null) gameType = "Sort";
             }
         }
 
-        // 3. REVERSE
-        if (answer == null && solveReverse.get() && (text.toLowerCase().contains("backwards") || text.toLowerCase().contains("reverse"))) {
-            int firstQuote = text.indexOf('"');
-            int lastQuote = text.lastIndexOf('"');
-            if (firstQuote != -1 && lastQuote > firstQuote) {
-                String word = text.substring(firstQuote + 1, lastQuote).trim();
+        // 2. REVERSE
+        if (answer == null && solveReverse.get()) {
+            Matcher m = REVERSE_PATTERN.matcher(text);
+            if (m.find()) {
+                String word = m.group(1) != null ? m.group(1) : m.group(2);
                 answer = ReverseSolver.solveReverse(word);
                 if (answer != null) gameType = "Reverse";
             }
         }
 
-        // 4. MATH
-        if (answer == null && solveMath.get() && text.toLowerCase().contains("calculate")) {
-            int firstQuote = text.indexOf('"');
-            int lastQuote = text.lastIndexOf('"');
-            if (firstQuote != -1 && lastQuote > firstQuote) {
-                String expr = text.substring(firstQuote + 1, lastQuote).trim();
+        // 3. MATH
+        if (answer == null && solveMath.get()) {
+            Matcher m = MATH_PATTERN.matcher(text);
+            if (m.find()) {
+                String expr = m.group(1) != null ? m.group(1) : m.group(2);
                 answer = MathSolver.solveMath(expr);
                 if (answer != null) gameType = "Math";
             }
         }
 
-        // 5. VARIABLE
+        // 4. WRITE / TYPE
+        if (answer == null) {
+            Matcher m = WRITE_PATTERN.matcher(text);
+            if (m.find()) {
+                answer = m.group(1).trim();
+                if (answer != null) gameType = "Write";
+            }
+        }
+
+        // 5. TRIVIA
+        if (answer == null && solveTrivia.get()) {
+            if (text.contains("\"")) {
+                int firstQuote = text.indexOf('"');
+                int lastQuote = text.lastIndexOf('"');
+                if (firstQuote != -1 && lastQuote > firstQuote) {
+                    String question = text.substring(firstQuote + 1, lastQuote).trim();
+                    if (question.length() > 5 && !question.contains("seconds to")) {
+                        answer = TriviaSolver.solveTrivia(question);
+                        if (answer != null) gameType = "Trivia";
+                    }
+                }
+            }
+            if (answer == null) {
+                answer = TriviaSolver.solveTrivia(text);
+                if (answer != null) gameType = "Trivia";
+            }
+        }
+
+        // 6. VARIABLE
         if (answer == null && solveVariable.get() && (text.contains("CHATGAMES") || text.contains("VARIABLE"))) {
             answer = VariableSolver.solveVariable(messageBuffer);
             if (answer != null) gameType = "Variable";
-        }
-
-        // 6. WRITE / TYPE
-        if (answer == null && (text.toLowerCase().contains("type the word") || text.toLowerCase().contains("type the sentence"))) {
-            int firstQuote = text.indexOf('"');
-            int lastQuote = text.lastIndexOf('"');
-            if (firstQuote != -1 && lastQuote > firstQuote) {
-                answer = text.substring(firstQuote + 1, lastQuote).trim();
-                if (answer != null) gameType = "Write";
-            }
         }
 
         // Dispatch Answer

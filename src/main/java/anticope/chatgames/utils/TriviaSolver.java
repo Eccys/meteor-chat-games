@@ -6,18 +6,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TriviaSolver {
     private static final Map<String, String> TRIVIA_DB = new HashMap<>();
     private static final Map<String, String> SORT_DB = new HashMap<>();
+    private static final List<String> WORDS_LIST = new ArrayList<>();
 
     static {
         loadDatabase();
+        loadWordList();
     }
 
     private static void loadDatabase() {
@@ -48,6 +50,24 @@ public class TriviaSolver {
         }
     }
 
+    private static void loadWordList() {
+        try (InputStream is = ChatGamesAddon.class.getResourceAsStream("/words.txt")) {
+            if (is != null) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        line = line.trim();
+                        if (!line.isEmpty()) {
+                            WORDS_LIST.add(line);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            ChatGamesAddon.LOG.error("Failed to load words.txt", e);
+        }
+    }
+
     private static String clean(String input) {
         return input.replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase().trim();
     }
@@ -74,18 +94,35 @@ public class TriviaSolver {
     public static String solveSort(String scrambled) {
         if (scrambled == null) return null;
         scrambled = scrambled.trim();
+
+        // 1. Direct DB lookup
         if (SORT_DB.containsKey(scrambled)) {
             return SORT_DB.get(scrambled);
         }
 
-        // Anagram matching
+        // 2. Anagram solver using embedded word list
         char[] targetChars = scrambled.toLowerCase().toCharArray();
-        java.util.Arrays.sort(targetChars);
+        Arrays.sort(targetChars);
 
+        for (String word : WORDS_LIST) {
+            if (word.length() == scrambled.length()) {
+                char[] wordChars = word.toLowerCase().toCharArray();
+                Arrays.sort(wordChars);
+                if (Arrays.equals(targetChars, wordChars)) {
+                    // Match original casing if scrambled starts with uppercase
+                    if (Character.isUpperCase(scrambled.charAt(0))) {
+                        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
+                    }
+                    return word;
+                }
+            }
+        }
+
+        // 3. Fallback check inside SORT_DB values
         for (Map.Entry<String, String> entry : SORT_DB.entrySet()) {
             char[] entryChars = entry.getValue().toLowerCase().toCharArray();
-            java.util.Arrays.sort(entryChars);
-            if (java.util.Arrays.equals(targetChars, entryChars)) {
+            Arrays.sort(entryChars);
+            if (Arrays.equals(targetChars, entryChars)) {
                 return entry.getValue();
             }
         }

@@ -16,10 +16,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AutoChatGame extends Module {
-    private static final Pattern SORT_PATTERN = Pattern.compile("sort (?:the )?word\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
-    private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type (?:the )?word|reverse (?:the )?word)\\s+\"([^\"]+)\"\\s+backwards|reverse (?:the )?word\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
-    private static final Pattern MATH_PATTERN = Pattern.compile("calculate\\s+\"([^\"]+)\"|calculate\\s+([0-9\\s+\\-*/]+)", Pattern.CASE_INSENSITIVE);
-    private static final Pattern WRITE_PATTERN = Pattern.compile("type (?:the )?(?:word|sentence)\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern SORT_PATTERN = Pattern.compile("(?:sort|unscramble)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type|write|reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"\\s+backwards|(?:reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern MATH_PATTERN = Pattern.compile("(?:calculate|solve)?\\s*\"?([0-9]+\\s*[+\\-*/xX]\\s*[0-9]+)\"?|(?:calculate|solve)\\s+([0-9\\s+\\-*/xX]+)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern WRITE_PATTERN = Pattern.compile("(?:type|write)\\s+(?:the\\s+)?(?:word|sentence)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgSolvers = settings.createGroup("Solvers");
@@ -100,6 +100,13 @@ public class AutoChatGame extends Module {
         .build()
     );
 
+    private final Setting<Boolean> solveFill = sgSolvers.add(new BoolSetting.Builder()
+        .name("solve-fill")
+        .description("Solve Fill-in-the-blank games.")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Random random = new Random();
     private final List<String> messageBuffer = new ArrayList<>();
     private long lastBufferTime = 0;
@@ -120,14 +127,14 @@ public class AutoChatGame extends Module {
 
         long now = System.currentTimeMillis();
 
-        // 1. De-duplicate event calls for identical text within 800ms
+        // De-duplicate rapid calls for identical text within 800ms
         if (text.equals(lastProcessedText) && (now - lastProcessedTime) < 800) {
             return;
         }
         lastProcessedText = text;
         lastProcessedTime = now;
 
-        // 2. Ignore server outcome broadcasts & system messages
+        // Ignore server outcome broadcasts & system noise
         if (text.contains("TIME EXPIRED") || text.contains("WINNER") || 
             text.contains("CORRECT ANSWER WAS") || text.contains("AWARDED A PRIZE") ||
             text.contains("FIRST TO RESPOND") || text.contains("Crates") || text.contains("WARPS")) {
@@ -144,7 +151,7 @@ public class AutoChatGame extends Module {
         String answer = null;
         String gameType = null;
 
-        // A. VARIABLE (Checked FIRST when equation lines are present)
+        // A. VARIABLE
         if (solveVariable.get() && (text.contains("=") && (text.contains("+") || text.contains("x")))) {
             answer = VariableSolver.solveVariable(messageBuffer);
             if (answer != null) gameType = "Variable";
@@ -189,14 +196,20 @@ public class AutoChatGame extends Module {
             }
         }
 
-        // F. TRIVIA (Checked LAST, requires quoted string of length >= 10 or exact trivia question match)
+        // F. FILL IN THE BLANK
+        if (answer == null && solveFill.get() && text.contains("_")) {
+            answer = FillSolver.solveFill(text);
+            if (answer != null) gameType = "Fill";
+        }
+
+        // G. TRIVIA
         if (answer == null && solveTrivia.get()) {
             if (text.contains("\"")) {
                 int firstQuote = text.indexOf('"');
                 int lastQuote = text.lastIndexOf('"');
                 if (firstQuote != -1 && lastQuote > firstQuote) {
                     String question = text.substring(firstQuote + 1, lastQuote).trim();
-                    if (question.length() >= 10 && !question.contains("seconds to") && !question.contains("calculate") && !question.contains("sort")) {
+                    if (question.length() >= 10 && !question.contains("seconds to") && !question.contains("calculate") && !question.contains("sort") && !question.contains("write")) {
                         answer = TriviaSolver.solveTrivia(question);
                         if (answer != null) gameType = "Trivia";
                     }

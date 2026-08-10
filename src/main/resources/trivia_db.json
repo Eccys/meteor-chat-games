@@ -1,170 +1,136 @@
-﻿{
-    "trivia":  [
-                   {
-                       "question":  "What is the name of the book series written by J.K. Rowling that follows the adventures of a young wizard?",
-                       "answer":  "Harry Potter"
-                   },
-                   {
-                       "question":  "Which city is known as the City of Love?",
-                       "answer":  "Paris"
-                   },
-                   {
-                       "question":  "What type of animal is the",
-                       "answer":  "Mammal"
-                   },
-                   {
-                       "question":  "dap gniruocS",
-                       "answer":  "Scouring pad"
-                   },
-                   {
-                       "question":  "What is the continent where the country of South Africa is located?",
-                       "answer":  "Africa"
-                   },
-                   {
-                       "question":  "What is the country known as the Land of the Kangaroos?",
-                       "answer":  "Australia"
-                   },
-                   {
-                       "question":  "What is the name of the process by which plants produce their own food using sunlight?",
-                       "answer":  "Photosynthesis"
-                   },
-                   {
-                       "question":  "Which country won the FIFA World Cup in 2010?",
-                       "answer":  "Spain"
-                   },
-                   {
-                       "question":  "aisenodnI",
-                       "answer":  "Indonesia"
-                   },
-                   {
-                       "question":  "What is the capital of the United Kingdom?",
-                       "answer":  "London"
-                   },
-                   {
-                       "question":  "Living room",
-                       "answer":  "Living room"
-                   },
-                   {
-                       "question":  "hcaorkcoC",
-                       "answer":  "Cockroach"
-                   },
-                   {
-                       "question":  "What traditional Spanish dish is made with rice, seafood, and meat?",
-                       "answer":  "Paella"
-                   },
-                   {
-                       "question":  "What is the name of the book series written by J.K. Rowling that follows the adventures of a young wizard?",
-                       "answer":  "Harry Potter"
-                   },
-                   {
-                       "question":  "Which city is known as the City of Love?",
-                       "answer":  "Paris"
-                   },
-                   {
-                       "question":  "What is the continent where the country of South Africa is located?",
-                       "answer":  "Africa"
-                   },
-                   {
-                       "question":  "What is the country known as the Land of the Kangaroos?",
-                       "answer":  "Australia"
-                   },
-                   {
-                       "question":  "What is the name of the process by which plants produce their own food using sunlight?",
-                       "answer":  "Photosynthesis"
-                   },
-                   {
-                       "question":  "Which country won the FIFA World Cup in 2010?",
-                       "answer":  "Spain"
-                   },
-                   {
-                       "question":  "What is the capital of the United Kingdom?",
-                       "answer":  "London"
-                   },
-                   {
-                       "question":  "What is the largest planet in our solar system?",
-                       "answer":  "Jupiter"
-                   },
-                   {
-                       "question":  "What is the capital of France?",
-                       "answer":  "Paris"
-                   },
-                   {
-                       "question":  "What element does \u0027O\u0027 represent on the periodic table?",
-                       "answer":  "Oxygen"
-                   },
-                   {
-                       "question":  "What is the chemical symbol for Gold?",
-                       "answer":  "Au"
-                   },
-                   {
-                       "question":  "Which ocean is the largest on Earth?",
-                       "answer":  "Pacific"
-                   },
-                   {
-                       "question":  "How many continents are there on Earth?",
-                       "answer":  "7"
-                   },
-                   {
-                       "question":  "Netty NIO IO #7",
-                       "answer":  "aborted by the software in your host machine"
-                   }
-               ],
-    "sort":  [
-                 {
-                     "solved":  "Arm",
-                     "scrambled":  "Amr"
-                 },
-                 {
-                     "solved":  "Hill",
-                     "scrambled":  "Hlil"
-                 },
-                 {
-                     "solved":  "Orange",
-                     "scrambled":  "eaOnrg"
-                 },
-                 {
-                     "solved":  "Cairo",
-                     "scrambled":  "aCoir"
-                 },
-                 {
-                     "solved":  "Balloon",
-                     "scrambled":  "ollnoBa"
-                 },
-                 {
-                     "solved":  "Room",
-                     "scrambled":  "moRo"
-                 },
-                 {
-                     "solved":  "Cycle",
-                     "scrambled":  "ycCle"
-                 },
-                 {
-                     "solved":  "Hedge",
-                     "scrambled":  "dHege"
-                 },
-                 {
-                     "solved":  "Brake",
-                     "scrambled":  "rkBea"
-                 },
-                 {
-                     "solved":  "Stone",
-                     "scrambled":  "toneS"
-                 },
-                 {
-                     "solved":  "Sea",
-                     "scrambled":  "eSa"
-                 },
-                 {
-                     "solved":  "Hedge",
-                     "scrambled":  "gedeH"
-                 },
-                 {
-                     "solved":  "Plant",
-                     "scrambled":  "Plnat"
-                 },
-                 {
-                     "solved":  "Pine",
-                     "scrambled":  "inPe"
-                 }
-             ]
+{
+    "trivia": [
+        {"question": "What is the name of the book series written by J.K. Rowling that follows the adventures of a young wizard?", "answer": "Harry Potter"},
+        {"question": "Which city is known as the City of Love?", "answer": "Paris"},
+        {"question": "What type of animal is the", "answer": "Mammal"},
+        {"question": "What is the continent where the country of South Africa is located?", "answer": "Africa"},
+        {"question": "What is the country known as the Land of the Kangaroos?", "answer": "Australia"},
+        {"question": "What is the name of the process by which plants produce their own food using sunlight?", "answer": "Photosynthesis"},
+        {"question": "Which country won the FIFA World Cup in 2010?", "answer": "Spain"},
+        {"question": "What is the capital of the United Kingdom?", "answer": "London"},
+        {"question": "What is the largest planet in our solar system?", "answer": "Jupiter"},
+        {"question": "What is the capital of France?", "answer": "Paris"},
+        {"question": "What element does 'O' represent on the periodic table?", "answer": "Oxygen"},
+        {"question": "What is the chemical symbol for Gold?", "answer": "Au"},
+        {"question": "Which ocean is the largest on Earth?", "answer": "Pacific"},
+        {"question": "How many continents are there on Earth?", "answer": "7"},
+        {"question": "What traditional Spanish dish is made with rice, seafood, and meat?", "answer": "Paella"},
+        {"question": "In which country was the painter Pablo Picasso born?", "answer": "Spain"},
+        {"question": "What insect is known for its ability to produce sounds with its wings?", "answer": "Cricket"},
+        {"question": "What is the main ingredient in guacamole?", "answer": "Avocado"},
+        {"question": "What is the name of the game mode in which players face hordes of zombies and other enemies in a survival scenario?", "answer": "Zombies"},
+        {"question": "Which block allows you to change your respawn point?", "answer": "Bed"},
+        {"question": "Which country is famous for its carnival and samba?", "answer": "Brazil"},
+        {"question": "What is the smallest ocean in the world?", "answer": "The Arctic"},
+
+        {"question": "What is the capital of Japan?", "answer": "Tokyo"},
+        {"question": "What is the capital of Italy?", "answer": "Rome"},
+        {"question": "What is the capital of Germany?", "answer": "Berlin"},
+        {"question": "What is the capital of Spain?", "answer": "Madrid"},
+        {"question": "What is the capital of Australia?", "answer": "Canberra"},
+        {"question": "What is the capital of Canada?", "answer": "Ottawa"},
+        {"question": "What is the capital of Brazil?", "answer": "Brasilia"},
+        {"question": "What is the capital of Russia?", "answer": "Moscow"},
+        {"question": "What is the capital of China?", "answer": "Beijing"},
+        {"question": "What is the capital of India?", "answer": "New Delhi"},
+        {"question": "What is the capital of Egypt?", "answer": "Cairo"},
+        {"question": "What is the capital of Mexico?", "answer": "Mexico City"},
+        {"question": "What is the capital of Argentina?", "answer": "Buenos Aires"},
+        {"question": "What is the capital of South Korea?", "answer": "Seoul"},
+        {"question": "What is the capital of Turkey?", "answer": "Ankara"},
+        {"question": "What is the capital of Thailand?", "answer": "Bangkok"},
+        {"question": "What is the capital of Indonesia?", "answer": "Jakarta"},
+
+        {"question": "What is the largest ocean on Earth?", "answer": "Pacific"},
+        {"question": "What is the largest continent?", "answer": "Asia"},
+        {"question": "What is the smallest continent?", "answer": "Australia"},
+        {"question": "What is the longest river in the world?", "answer": "Nile"},
+        {"question": "What is the tallest mountain in the world?", "answer": "Everest"},
+        {"question": "What is the largest desert in the world?", "answer": "Sahara"},
+        {"question": "What is the largest country in the world by area?", "answer": "Russia"},
+        {"question": "What is the most populated country in the world?", "answer": "China"},
+        {"question": "What is the deepest ocean in the world?", "answer": "Pacific"},
+
+        {"question": "What planet is known as the Red Planet?", "answer": "Mars"},
+        {"question": "What planet is closest to the Sun?", "answer": "Mercury"},
+        {"question": "What planet is known for its rings?", "answer": "Saturn"},
+        {"question": "How many planets are in our solar system?", "answer": "8"},
+        {"question": "What is the closest star to Earth?", "answer": "Sun"},
+        {"question": "What is the name of Earth's natural satellite?", "answer": "Moon"},
+        {"question": "What galaxy do we live in?", "answer": "Milky Way"},
+
+        {"question": "What is the chemical symbol for water?", "answer": "H2O"},
+        {"question": "What is the chemical symbol for Silver?", "answer": "Ag"},
+        {"question": "What is the chemical symbol for Iron?", "answer": "Fe"},
+        {"question": "What is the chemical symbol for Sodium?", "answer": "Na"},
+        {"question": "What is the hardest natural substance on Earth?", "answer": "Diamond"},
+        {"question": "What gas do humans breathe in?", "answer": "Oxygen"},
+        {"question": "What gas do plants absorb from the atmosphere?", "answer": "Carbon Dioxide"},
+
+        {"question": "Who painted the Mona Lisa?", "answer": "Leonardo da Vinci"},
+        {"question": "Who wrote Romeo and Juliet?", "answer": "Shakespeare"},
+        {"question": "What is the largest animal on Earth?", "answer": "Blue Whale"},
+        {"question": "What is the fastest land animal?", "answer": "Cheetah"},
+        {"question": "What is the tallest animal in the world?", "answer": "Giraffe"},
+        {"question": "How many legs does a spider have?", "answer": "8"},
+        {"question": "What is the largest bird in the world?", "answer": "Ostrich"},
+        {"question": "What animal is known as the King of the Jungle?", "answer": "Lion"},
+        {"question": "What is a baby frog called?", "answer": "Tadpole"},
+        {"question": "What is the fastest bird in the world?", "answer": "Peregrine Falcon"},
+
+        {"question": "What sport is played at Wimbledon?", "answer": "Tennis"},
+        {"question": "How many players are on a soccer team?", "answer": "11"},
+        {"question": "What country invented pizza?", "answer": "Italy"},
+        {"question": "What country is the Eiffel Tower in?", "answer": "France"},
+        {"question": "What country is the Great Wall located in?", "answer": "China"},
+        {"question": "What country is known for its tulips and windmills?", "answer": "Netherlands"},
+        {"question": "What is the currency of Japan?", "answer": "Yen"},
+        {"question": "What is the currency of the United Kingdom?", "answer": "Pound"},
+        {"question": "What language is most spoken in the world?", "answer": "Mandarin"},
+        {"question": "What is the largest island in the world?", "answer": "Greenland"},
+
+        {"question": "In Minecraft, what material do you need to mine diamonds?", "answer": "Iron"},
+        {"question": "In Minecraft, how many blocks high is the build limit?", "answer": "320"},
+        {"question": "In Minecraft, what mob explodes when it gets close to a player?", "answer": "Creeper"},
+        {"question": "In Minecraft, what dimension do you access through a Nether Portal?", "answer": "Nether"},
+        {"question": "In Minecraft, what is the name of the final boss?", "answer": "Ender Dragon"},
+        {"question": "In Minecraft, what item do you use to tame a wolf?", "answer": "Bone"},
+        {"question": "In Minecraft, what food do you use to breed cows?", "answer": "Wheat"},
+        {"question": "In Minecraft, what is the rarest ore?", "answer": "Emerald"},
+        {"question": "What is the name of the hostile mob that teleports in Minecraft?", "answer": "Enderman"},
+        {"question": "What food restores the most hunger in Minecraft?", "answer": "Golden Carrot"},
+        {"question": "What do you use to make a cake in Minecraft?", "answer": "Wheat"},
+        {"question": "What biome has the most trees in Minecraft?", "answer": "Jungle"},
+        {"question": "Which mob drops gunpowder in Minecraft?", "answer": "Creeper"},
+        {"question": "What is the strongest material in Minecraft?", "answer": "Netherite"},
+        {"question": "What do you need to make an enchanting table?", "answer": "Obsidian"},
+
+        {"question": "What is the boiling point of water in Celsius?", "answer": "100"},
+        {"question": "What is the freezing point of water in Celsius?", "answer": "0"},
+        {"question": "How many sides does a hexagon have?", "answer": "6"},
+        {"question": "How many sides does a triangle have?", "answer": "3"},
+        {"question": "What color do you get when you mix red and blue?", "answer": "Purple"},
+        {"question": "What color do you get when you mix red and yellow?", "answer": "Orange"},
+        {"question": "How many hours are in a day?", "answer": "24"},
+        {"question": "How many days are in a year?", "answer": "365"},
+        {"question": "How many minutes are in an hour?", "answer": "60"},
+        {"question": "What is the square root of 144?", "answer": "12"},
+        {"question": "What is the square root of 64?", "answer": "8"}
+    ],
+    "sort": [
+        {"scrambled": "Amr", "solved": "Arm"},
+        {"scrambled": "Hlil", "solved": "Hill"},
+        {"scrambled": "eaOnrg", "solved": "Orange"},
+        {"scrambled": "aCoir", "solved": "Cairo"},
+        {"scrambled": "ollnoBa", "solved": "Balloon"},
+        {"scrambled": "moRo", "solved": "Room"},
+        {"scrambled": "ycCle", "solved": "Cycle"},
+        {"scrambled": "dHege", "solved": "Hedge"},
+        {"scrambled": "rkBea", "solved": "Brake"},
+        {"scrambled": "toneS", "solved": "Stone"},
+        {"scrambled": "eSa", "solved": "Sea"},
+        {"scrambled": "gedeH", "solved": "Hedge"},
+        {"scrambled": "Plnat", "solved": "Plant"},
+        {"scrambled": "inPe", "solved": "Pine"}
+    ]
 }

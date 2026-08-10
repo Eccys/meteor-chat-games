@@ -1,0 +1,58 @@
+plugins {
+	id 'java'
+	id 'fabric-loom' version '1.16.3'
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+
+base {
+	archivesName = project.archives_base_name
+}
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	flatDir { dirs 'libs' }
+	maven { url "https://maven.meteordev.org/"}
+	maven { url "https://maven.meteordev.org/snapshots" }
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings files('libs/intermediary-named-26.1.2.jar')
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	modImplementation fileTree(dir: 'libs', include: ['*.jar'], exclude: ['intermediary-named-26.1.2.jar'])
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version,
+				"mc_version": project.minecraft_version
+	}
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${base.archivesName}" }
+	}
+}
+tasks.withType(Jar).configureEach {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	def targetVersion = 21
+	if (JavaVersion.current().isJava9Compatible()) {
+		 it.options.release = targetVersion
+	}
+}

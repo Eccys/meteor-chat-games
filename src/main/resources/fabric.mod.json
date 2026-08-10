@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "meteor-chat-games",
+  "version": "${version}",
+  "name": "Meteor Chat Games Addon",
+  "description": "Fully automated Chat Games solver addon for Meteor Client.",
+  "authors": [
+    "Antigravity"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Antigravity/meteor-chat-games"
+  },
+  "license": "MIT",
+  "icon": "assets/meteor-chatgames/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "meteor": [
+      "anticope.chatgames.ChatGamesAddon"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": ">=1.21",
+    "meteor-client": "*"
+  }
+}

@@ -1,0 +1,166 @@
+﻿{
+    "trivia":  [
+                   {
+                       "question":  "What is the name of the book series written by J.K. Rowling that follows the adventures of a young wizard?",
+                       "answer":  "Harry Potter"
+                   },
+                   {
+                       "question":  "Which city is known as the City of Love?",
+                       "answer":  "Paris"
+                   },
+                   {
+                       "question":  "What type of animal is the",
+                       "answer":  "Mammal"
+                   },
+                   {
+                       "question":  "dap gniruocS",
+                       "answer":  "Scouring pad"
+                   },
+                   {
+                       "question":  "What is the continent where the country of South Africa is located?",
+                       "answer":  "Africa"
+                   },
+                   {
+                       "question":  "What is the country known as the Land of the Kangaroos?",
+                       "answer":  "Australia"
+                   },
+                   {
+                       "question":  "What is the name of the process by which plants produce their own food using sunlight?",
+                       "answer":  "Photosynthesis"
+                   },
+                   {
+                       "question":  "Which country won the FIFA World Cup in 2010?",
+                       "answer":  "Spain"
+                   },
+                   {
+                       "question":  "aisenodnI",
+                       "answer":  "Indonesia"
+                   },
+                   {
+                       "question":  "What is the capital of the United Kingdom?",
+                       "answer":  "London"
+                   },
+                   {
+                       "question":  "Living room",
+                       "answer":  "Living room"
+                   },
+                   {
+                       "question":  "hcaorkcoC",
+                       "answer":  "Cockroach"
+                   },
+                   {
+                       "question":  "What traditional Spanish dish is made with rice, seafood, and meat?",
+                       "answer":  "Paella"
+                   },
+                   {
+                       "question":  "What is the name of the book series written by J.K. Rowling that follows the adventures of a young wizard?",
+                       "answer":  "Harry Potter"
+                   },
+                   {
+                       "question":  "Which city is known as the City of Love?",
+                       "answer":  "Paris"
+                   },
+                   {
+                       "question":  "What is the continent where the country of South Africa is located?",
+                       "answer":  "Africa"
+                   },
+                   {
+                       "question":  "What is the country known as the Land of the Kangaroos?",
+                       "answer":  "Australia"
+                   },
+                   {
+                       "question":  "What is the name of the process by which plants produce their own food using sunlight?",
+                       "answer":  "Photosynthesis"
+                   },
+                   {
+                       "question":  "Which country won the FIFA World Cup in 2010?",
+                       "answer":  "Spain"
+                   },
+                   {
+                       "question":  "What is the capital of the United Kingdom?",
+                       "answer":  "London"
+                   },
+                   {
+                       "question":  "What is the largest planet in our solar system?",
+                       "answer":  "Jupiter"
+                   },
+                   {
+                       "question":  "What is the capital of France?",
+                       "answer":  "Paris"
+                   },
+                   {
+                       "question":  "What element does \u0027O\u0027 represent on the periodic table?",
+                       "answer":  "Oxygen"
+                   },
+                   {
+                       "question":  "What is the chemical symbol for Gold?",
+                       "answer":  "Au"
+                   },
+                   {
+                       "question":  "Which ocean is the largest on Earth?",
+                       "answer":  "Pacific"
+                   },
+                   {
+                       "question":  "How many continents are there on Earth?",
+                       "answer":  "7"
+                   }
+               ],
+    "sort":  [
+                 {
+                     "solved":  "Arm",
+                     "scrambled":  "Amr"
+                 },
+                 {
+                     "solved":  "Hill",
+                     "scrambled":  "Hlil"
+                 },
+                 {
+                     "solved":  "Orange",
+                     "scrambled":  "eaOnrg"
+                 },
+                 {
+                     "solved":  "Cairo",
+                     "scrambled":  "aCoir"
+                 },
+                 {
+                     "solved":  "Balloon",
+                     "scrambled":  "ollnoBa"
+                 },
+                 {
+                     "solved":  "Room",
+                     "scrambled":  "moRo"
+                 },
+                 {
+                     "solved":  "Cycle",
+                     "scrambled":  "ycCle"
+                 },
+                 {
+                     "solved":  "Hedge",
+                     "scrambled":  "dHege"
+                 },
+                 {
+                     "solved":  "Brake",
+                     "scrambled":  "rkBea"
+                 },
+                 {
+                     "solved":  "Stone",
+                     "scrambled":  "toneS"
+                 },
+                 {
+                     "solved":  "Sea",
+                     "scrambled":  "eSa"
+                 },
+                 {
+                     "solved":  "Hedge",
+                     "scrambled":  "gedeH"
+                 },
+                 {
+                     "solved":  "Plant",
+                     "scrambled":  "Plnat"
+                 },
+                 {
+                     "solved":  "Pine",
+                     "scrambled":  "inPe"
+                 }
+             ]
+}

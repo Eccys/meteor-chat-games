@@ -25,6 +25,11 @@
         {"question": "Which mob has the ability to teleport?", "answer": "Enderman"},
         {"question": "Who founded Microsoft?", "answer": "Bill Gates"},
         {"question": "Which famous French leader was crowned emperor in 1804?", "answer": "Napoleon"},
+        {"question": "Who wrote", "answer": "Cervantes"},
+        {"question": "Don Quixote", "answer": "Cervantes"},
+        {"question": "In which sport are", "answer": "Basketball"},
+        {"question": "baskets", "answer": "Basketball"},
+        {"question": "What is the animal", "answer": "Mammal"},
 
         {"question": "What is the capital of Japan?", "answer": "Tokyo"},
         {"question": "What is the capital of Italy?", "answer": "Rome"},

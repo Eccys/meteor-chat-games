@@ -65,6 +65,7 @@ Came
 Camel
 Camp
 Campfire
+Campion
 Candle
 Capture
 Card
@@ -73,6 +74,7 @@ Carrot
 Case
 Cat
 Chain
+Champion
 Cheek
 Chest
 Chicken
@@ -86,11 +88,14 @@ Cobblestone
 Cockroach
 Cold
 Come
+Companion
 Compass
 Cook
 Cookie
 Cool
+Coupon
 Cow
+Crampon
 Creeper
 Culture
 Curry
@@ -164,6 +169,7 @@ Full
 Fun
 Furnace
 Game
+Garrison
 Gate
 Gesture
 Ghast
@@ -188,6 +194,7 @@ Half
 Hall
 Hand
 Hard
+Harpoon
 Harry
 Hat
 Head
@@ -231,6 +238,7 @@ Lack
 Ladder
 Lady
 Ladybug
+Lampoon
 Land
 Lane
 Lantern
@@ -266,6 +274,7 @@ Main
 Make
 Mammal
 Many
+Marathon
 March
 Mark
 Match
@@ -382,6 +391,7 @@ Same
 Sand
 Sandstone
 Save
+Scorpion
 Scour
 Scouring
 Sea
@@ -436,6 +446,7 @@ Sword
 Take
 Talk
 Tall
+Tampion
 Target
 Task
 Team
@@ -486,6 +497,7 @@ Wash
 Water
 Wave
 Way
+Weapon
 Wear
 Week
 Well

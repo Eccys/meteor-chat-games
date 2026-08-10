@@ -14,6 +14,8 @@
         {"question": "What is the chemical symbol for Gold?", "answer": "Au"},
         {"question": "Which ocean is the largest on Earth?", "answer": "Pacific"},
         {"question": "How many continents are there on Earth?", "answer": "7"},
+        {"question": "How many continents are there in the world?", "answer": "7"},
+        {"question": "How many continents", "answer": "7"},
         {"question": "What traditional Spanish dish is made with rice, seafood, and meat?", "answer": "Paella"},
         {"question": "In which country was the painter Pablo Picasso born?", "answer": "Spain"},
         {"question": "What insect is known for its ability to produce sounds with its wings?", "answer": "Cricket"},

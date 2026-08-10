@@ -91,6 +91,7 @@ Cookie
 Cool
 Cow
 Creeper
+Curry
 Cycle
 Dark
 Data
@@ -188,6 +189,7 @@ Hear
 Heat
 Hedge
 Held
+Helicon
 Helmet
 Help
 Here
@@ -282,12 +284,14 @@ News
 Next
 Nice
 Night
+Nightgown
 None
 North
 Note
 Oak
 Obsidian
 Ocelot
+Office
 Omelette
 Open
 Orange
@@ -369,6 +373,7 @@ Seed
 Seek
 Seem
 Send
+Sharpener
 Sheep
 Shield
 Shop

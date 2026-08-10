@@ -147,16 +147,12 @@ public class AutoChatGame extends Module {
 
     private void debug(String msg) {
         if (debugMode.get()) {
-            ChatUtils.info("§7[Debug] " + msg);
             ChatGamesAddon.LOG.info("[AutoChatGame:Debug] " + msg);
         }
     }
 
     private void debugRegex(String solver, String input, boolean matched, String result) {
         if (debugRegex.get()) {
-            String status = matched ? "§a✓ MATCHED" : "§c✗ no match";
-            String resultStr = result != null ? " => §e" + result : "";
-            ChatUtils.info("§7[Regex] " + solver + ": " + status + resultStr + " §7| input: §f" + truncate(input, 60));
             ChatGamesAddon.LOG.info("[AutoChatGame:Regex] " + solver + ": " + (matched ? "MATCHED" : "no match") + (result != null ? " => " + result : "") + " | input: " + input);
         }
     }
@@ -171,7 +167,11 @@ public class AutoChatGame extends Module {
         String text = event.getMessage().getString();
         if (text == null || text.trim().isEmpty()) return;
 
+        // CRITICAL: Ignore our own messages to prevent infinite feedback loop
+        if (text.contains("[Meteor]") || text.contains("[AutoChatGame]") || text.contains("[Debug]") || text.contains("[Regex]")) return;
+
         long now = System.currentTimeMillis();
+
 
         // De-duplicate rapid calls for identical text within 800ms
         if (text.equals(lastProcessedText) && (now - lastProcessedTime) < 800) {

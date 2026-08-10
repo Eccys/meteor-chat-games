@@ -167,8 +167,9 @@ public class AutoChatGame extends Module {
         String text = event.getMessage().getString();
         if (text == null || text.trim().isEmpty()) return;
 
-        // CRITICAL: Ignore our own messages to prevent infinite feedback loop
-        if (text.contains("[Meteor]") || text.contains("[AutoChatGame]") || text.contains("[Debug]") || text.contains("[Regex]")) return;
+        // CRITICAL: Ignore our own solve/debug messages to prevent infinite feedback loop
+        // Only filter messages that are specifically our output format, not all [Meteor] messages
+        if (text.contains("[AutoChatGame]")) return;
 
         long now = System.currentTimeMillis();
 
@@ -312,9 +313,9 @@ public class AutoChatGame extends Module {
 
         // Dispatch Answer
         if (answer != null && !answer.isEmpty()) {
-            // Prevent duplicate answer spam within 5 seconds
-            if (answer.equalsIgnoreCase(lastAnswerSent) && (now - lastAnswerTime) < 5000) {
-                debug("§8[DEDUP-ANS] Suppressed duplicate answer: " + answer);
+            // Prevent duplicate answer spam within 8 seconds
+            if ((now - lastAnswerTime) < 8000) {
+                debug("§8[DEDUP-ANS] Suppressed duplicate answer: " + answer + " (" + (now - lastAnswerTime) + "ms since last)");
                 return;
             }
 

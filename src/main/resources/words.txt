@@ -66,6 +66,7 @@ Camel
 Camp
 Campfire
 Candle
+Capture
 Card
 Care
 Carrot
@@ -91,6 +92,7 @@ Cookie
 Cool
 Cow
 Creeper
+Culture
 Curry
 Cycle
 Dark
@@ -133,6 +135,7 @@ Fall
 Farm
 Fast
 Fear
+Feature
 Feel
 Feet
 Fence
@@ -145,6 +148,7 @@ Fire
 Firm
 Fish
 Five
+Fixture
 Flat
 Flow
 Food
@@ -152,6 +156,7 @@ Foot
 Form
 Four
 Fox
+Fracture
 Free
 Frog
 From
@@ -160,6 +165,7 @@ Fun
 Furnace
 Game
 Gate
+Gesture
 Ghast
 Give
 Glad
@@ -187,6 +193,7 @@ Hat
 Head
 Hear
 Heat
+Hectare
 Hedge
 Held
 Helicon
@@ -233,6 +240,7 @@ Last
 Late
 Lava
 Lectern
+Lecture
 Left
 Less
 Lever
@@ -265,6 +273,8 @@ Melon
 Milk
 Mind
 Mine
+Mixture
+Moisture
 Moon
 More
 Mortar
@@ -288,6 +298,7 @@ Nightgown
 None
 North
 Note
+Nurture
 Oak
 Obsidian
 Ocelot
@@ -296,6 +307,7 @@ Omelette
 Open
 Orange
 Over
+Overture
 Oxygen
 Pad
 Page
@@ -305,12 +317,14 @@ Paris
 Park
 Parrot
 Part
+Pasture
 Path
 Peanut
 Phantom
 Photosynthesis
 Pick
 Pickaxe
+Picture
 Pie
 Pig
 Pillow
@@ -324,11 +338,13 @@ Plus
 Pool
 Port
 Post
+Posture
 Pot
 Potato
 Potter
 Pull
 Pumpkin
+Puncture
 Pure
 Push
 Quartz
@@ -336,6 +352,7 @@ Rabbit
 Race
 Rail
 Rain
+Rapture
 Rate
 Reach
 Read
@@ -426,6 +443,7 @@ Tell
 Term
 Test
 Text
+Texture
 Than
 That
 Them
@@ -436,6 +454,7 @@ Time
 Tiny
 Tnrncr
 Torch
+Torture
 Tour
 Town
 Track
@@ -454,6 +473,7 @@ Upon
 Used
 User
 Van
+Venture
 View
 Villager
 Wait

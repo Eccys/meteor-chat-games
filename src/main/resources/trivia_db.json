@@ -34,6 +34,8 @@
         {"question": "What is the animal", "answer": "Mammal"},
         {"question": "What mountain is located on the border between Nepal and China", "answer": "Mount Everest"},
         {"question": "border between Nepal and China", "answer": "Mount Everest"},
+        {"question": "What is the famous writing system used by the ancient Egyptians", "answer": "Hieroglyphics"},
+        {"question": "ancient Egyptians using pictographic symbols", "answer": "Hieroglyphics"},
 
         {"question": "What is the capital of Japan?", "answer": "Tokyo"},
         {"question": "What is the capital of Italy?", "answer": "Rome"},

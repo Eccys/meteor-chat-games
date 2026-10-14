@@ -144,9 +144,8 @@ public class SolverTest {
         // Test from real log: "__dybug" -> "Ladybug"
         String result = FillSolver.solveFill("__dybug");
         assertNotNull("Fill __dybug", result);
-        if (result != null) {
-            assertEqual("Fill __dybug => Ladybug", result.toLowerCase(), "ladybug");
-        }
+        assertEqual("Fill __dybug => Ladybug", result, "Ladybug");
+        assertEqual("Fill _VD => DVD", FillSolver.solveFill("_VD"), "DVD");
     }
 
     static void testVariableSolver() {
@@ -165,6 +164,7 @@ public class SolverTest {
         assertEqual("Variable 5*3+x=20", VariableSolver.solveVariable(List.of("A + A + A = 15", "B + B + B = 9", "A * B + x = 20")), "5");
         assertEqual("Variable 5+3*x=17", VariableSolver.solveVariable(List.of("A + A + A = 15", "B + B + B = 9", "A + B * x = 17")), "4");
         assertEqual("Variable 12/3+x=10", VariableSolver.solveVariable(List.of("A + A + A = 36", "B + B + B = 9", "A / B + x = 10")), "6");
+        assertEqual("Variable with stale buffer line", VariableSolver.solveVariable(List.of("Z + Z + Z = 99", "A + A + A = 15", "B + B + B = 9", "A + B + x = 12")), "4");
 
         // Edge: null
         assertEqual("Variable null", VariableSolver.solveVariable(null), null);

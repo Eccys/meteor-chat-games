@@ -58,8 +58,8 @@ public class FillSolver {
                     }
                 }
                 if (match) {
-                    // Always capitalize first letter to match server format
-                    return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
+                    // Always capitalize first letter while preserving uppercase acronyms like DVD
+                    return Character.toUpperCase(word.charAt(0)) + word.substring(1);
                 }
             }
         }

@@ -14,7 +14,7 @@ public class SolverTest {
     // Patterns copied from AutoChatGame.java to verify they match
     private static final Pattern SORT_PATTERN = Pattern.compile("(?:sort|unscramble)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type|write|reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"\\s+backwards|(?:reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
-    private static final Pattern MATH_PATTERN = Pattern.compile("\"(\\d+\\s*[+\\-*/xX]\\s*\\d+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern MATH_PATTERN = Pattern.compile("\"(-?\\d+\\s*[+\\-*/xX]\\s*-?\\d+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern WRITE_PATTERN = Pattern.compile("(?:to\\s+)?(?:type|write)\\s+\"([^\"]+)\"(?!\\s+backwards\\b)", Pattern.CASE_INSENSITIVE);
 
     private static int passed = 0;
@@ -52,6 +52,7 @@ public class SolverTest {
         assertRegexMatch(MATH_PATTERN, "20 seconds to calculate \"88 - 23\"", "88 - 23");
         assertRegexMatch(MATH_PATTERN, "solve \"100 * 3\"", "100 * 3");
         assertRegexMatch(MATH_PATTERN, "\"45 / 9\"", "45 / 9");
+        assertRegexMatch(MATH_PATTERN, "solve \"-12 * -3\"", "-12 * -3");
 
         // With formatting noise stripped by getString()
         assertRegexMatch(MATH_PATTERN, "You have 20 seconds to  \"12 + 54\"", "12 + 54");
@@ -118,6 +119,11 @@ public class SolverTest {
         assertEqual("Multiply", MathSolver.solveMath("12 * 12"), "144");
         assertEqual("Multiply with x", MathSolver.solveMath("12 x 12"), "144");
         assertEqual("Multiply with X", MathSolver.solveMath("12 X 5"), "60");
+        assertEqual("Negative add", MathSolver.solveMath("-12 + 5"), "-7");
+        assertEqual("Negative subtract", MathSolver.solveMath("-12 - 5"), "-17");
+        assertEqual("Subtract negative", MathSolver.solveMath("12 - -5"), "17");
+        assertEqual("Negative multiply", MathSolver.solveMath("-12 * -3"), "36");
+        assertEqual("Negative divide", MathSolver.solveMath("-45 / 9"), "-5");
     }
 
     static void testReverseSolver() {
@@ -154,6 +160,11 @@ public class SolverTest {
         lines.add("B + B + B = 9");
         lines.add("A + B + x = 12");
         assertEqual("Variable 5+3+x=12", VariableSolver.solveVariable(lines), "4");
+
+        // Multiplication/subtraction in line 3
+        assertEqual("Variable 5*3+x=20", VariableSolver.solveVariable(List.of("A + A + A = 15", "B + B + B = 9", "A * B + x = 20")), "5");
+        assertEqual("Variable 5+3*x=17", VariableSolver.solveVariable(List.of("A + A + A = 15", "B + B + B = 9", "A + B * x = 17")), "4");
+        assertEqual("Variable 12/3+x=10", VariableSolver.solveVariable(List.of("A + A + A = 36", "B + B + B = 9", "A / B + x = 10")), "6");
 
         // Edge: null
         assertEqual("Variable null", VariableSolver.solveVariable(null), null);

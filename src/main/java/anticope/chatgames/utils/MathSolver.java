@@ -4,8 +4,8 @@ public class MathSolver {
     public static String solveMath(String expression) {
         if (expression == null) return null;
         try {
-            // Clean non-math characters
-            String clean = expression.replaceAll("[^0-9+\\-*/().\\s]", "").trim();
+            // Clean non-math characters (preserve x/X for multiplication)
+            String clean = expression.replaceAll("[^0-9+\\-*/xX().\\s]", "").trim();
             if (clean.isEmpty()) return null;
 
             // Simple two-operand evaluator
@@ -20,8 +20,8 @@ public class MathSolver {
                     long second = parseLong(clean.substring(dashIndex + 1));
                     return String.valueOf(first - second);
                 }
-            } else if (clean.contains("*") || clean.contains("x")) {
-                String[] parts = clean.split("[*x]");
+            } else if (clean.contains("*") || clean.contains("x") || clean.contains("X")) {
+                String[] parts = clean.split("[*xX]");
                 long result = parseLong(parts[0]) * parseLong(parts[1]);
                 return String.valueOf(result);
             } else if (clean.contains("/")) {

@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class AutoChatGame extends Module {
     private static final Pattern SORT_PATTERN = Pattern.compile("(?:sort|unscramble)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type|write|reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"\\s+backwards|(?:reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
-    private static final Pattern MATH_PATTERN = Pattern.compile("\"(\\d+\\s*[+\\-*/xX]\\s*\\d+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern MATH_PATTERN = Pattern.compile("\"(-?\\d+\\s*[+\\-*/xX]\\s*-?\\d+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern WRITE_PATTERN = Pattern.compile("(?:to\\s+)?(?:type|write)\\s+\"([^\"]+)\"(?!\\s+backwards\\b)", Pattern.CASE_INSENSITIVE);
     private static final Pattern FILL_PATTERN = Pattern.compile("([a-zA-Z_]{3,})", Pattern.CASE_INSENSITIVE);
 
@@ -232,7 +232,7 @@ public class AutoChatGame extends Module {
         String gameType = null;
 
         // A. VARIABLE
-        if (solveVariable.get() && (text.contains("=") && (text.contains("+") || text.contains("x")))) {
+        if (solveVariable.get() && (text.contains("=") && (text.contains("+") || text.contains("-") || text.contains("*") || text.contains("/") || text.contains("x")))) {
             String result = VariableSolver.solveVariable(messageBuffer);
             debugRegex("VARIABLE", text, result != null, result);
             if (result != null) { answer = result; gameType = "Variable"; messageBuffer.clear(); }

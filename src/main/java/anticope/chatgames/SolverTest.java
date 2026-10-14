@@ -15,7 +15,7 @@ public class SolverTest {
     private static final Pattern SORT_PATTERN = Pattern.compile("(?:sort|unscramble)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type|write|reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"\\s+backwards|(?:reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern MATH_PATTERN = Pattern.compile("\"(\\d+\\s*[+\\-*/xX]\\s*\\d+)\"", Pattern.CASE_INSENSITIVE);
-    private static final Pattern WRITE_PATTERN = Pattern.compile("(?:to\\s+)?(?:type|write)\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern WRITE_PATTERN = Pattern.compile("(?:to\\s+)?(?:type|write)\\s+\"([^\"]+)\"(?!\\s+backwards\\b)", Pattern.CASE_INSENSITIVE);
 
     private static int passed = 0;
     private static int failed = 0;
@@ -74,6 +74,7 @@ public class SolverTest {
         // Should NOT match regular chat
         assertRegexNoMatch(WRITE_PATTERN, "Player123: hey guys");
         assertRegexNoMatch(WRITE_PATTERN, "CHATGAMES WRITE");
+        assertRegexNoMatch(WRITE_PATTERN, "write \"Balloon\" backwards");
     }
 
     static void testSortRegex() {
@@ -115,6 +116,8 @@ public class SolverTest {
         assertEqual("Large numbers", MathSolver.solveMath("999 + 999"), "1998");
         assertEqual("Single digits", MathSolver.solveMath("5 + 3"), "8");
         assertEqual("Multiply", MathSolver.solveMath("12 * 12"), "144");
+        assertEqual("Multiply with x", MathSolver.solveMath("12 x 12"), "144");
+        assertEqual("Multiply with X", MathSolver.solveMath("12 X 5"), "60");
     }
 
     static void testReverseSolver() {
@@ -125,6 +128,8 @@ public class SolverTest {
         assertEqual("Reverse Room", ReverseSolver.solveReverse("Room"), "mooR");
         assertEqual("Reverse null", ReverseSolver.solveReverse(null), null);
         assertEqual("Reverse empty", ReverseSolver.solveReverse(""), null);
+        assertEqual("Reverse single quote", ReverseSolver.solveReverse("\""), null);
+        assertEqual("Reverse empty quotes", ReverseSolver.solveReverse("\"\""), null);
     }
 
     static void testFillSolver() {

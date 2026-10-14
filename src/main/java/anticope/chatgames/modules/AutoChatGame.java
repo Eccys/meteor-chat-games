@@ -19,7 +19,7 @@ public class AutoChatGame extends Module {
     private static final Pattern SORT_PATTERN = Pattern.compile("(?:sort|unscramble)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern REVERSE_PATTERN = Pattern.compile("(?:type|write|reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"\\s+backwards|(?:reverse)\\s+(?:the\\s+)?(?:word)?\\s*\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
     private static final Pattern MATH_PATTERN = Pattern.compile("\"(\\d+\\s*[+\\-*/xX]\\s*\\d+)\"", Pattern.CASE_INSENSITIVE);
-    private static final Pattern WRITE_PATTERN = Pattern.compile("(?:to\\s+)?(?:type|write)\\s+\"([^\"]+)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern WRITE_PATTERN = Pattern.compile("(?:to\\s+)?(?:type|write)\\s+\"([^\"]+)\"(?!\\s+backwards\\b)", Pattern.CASE_INSENSITIVE);
     private static final Pattern FILL_PATTERN = Pattern.compile("([a-zA-Z_]{3,})", Pattern.CASE_INSENSITIVE);
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -105,6 +105,13 @@ public class AutoChatGame extends Module {
     private final Setting<Boolean> solveFill = sgSolvers.add(new BoolSetting.Builder()
         .name("solve-fill")
         .description("Solve Fill-in-the-blank games.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> solveWrite = sgSolvers.add(new BoolSetting.Builder()
+        .name("solve-write")
+        .description("Solve Write / Type word games.")
         .defaultValue(true)
         .build()
     );
@@ -228,7 +235,7 @@ public class AutoChatGame extends Module {
         if (solveVariable.get() && (text.contains("=") && (text.contains("+") || text.contains("x")))) {
             String result = VariableSolver.solveVariable(messageBuffer);
             debugRegex("VARIABLE", text, result != null, result);
-            if (result != null) { answer = result; gameType = "Variable"; }
+            if (result != null) { answer = result; gameType = "Variable"; messageBuffer.clear(); }
         }
 
         // B. SORT / UNSCRAMBLE
@@ -274,7 +281,7 @@ public class AutoChatGame extends Module {
         }
 
         // E. WRITE / TYPE — match `to write "Cheek"` or `type "word"`
-        if (answer == null) {
+        if (answer == null && solveWrite.get()) {
             Matcher m = WRITE_PATTERN.matcher(text);
             boolean found = m.find();
             if (found) {
@@ -359,3 +366,4 @@ public class AutoChatGame extends Module {
         }
     }
 }
+

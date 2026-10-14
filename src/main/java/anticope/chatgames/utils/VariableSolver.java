@@ -15,16 +15,17 @@ public class VariableSolver {
             }
 
             if (eqLines.size() >= 3) {
+                int base = eqLines.size() - 3;
                 // Line 1: A + A + A = Val1 (or A * A * A = Val1)
-                long a = solveUniformLine(eqLines.get(0));
-                String symA = firstToken(eqLines.get(0));
+                long a = solveUniformLine(eqLines.get(base));
+                String symA = firstToken(eqLines.get(base));
 
                 // Line 2: B + B + B = Val2 (or B * B * B = Val2)
-                long b = solveUniformLine(eqLines.get(1));
-                String symB = firstToken(eqLines.get(1));
+                long b = solveUniformLine(eqLines.get(base + 1));
+                String symB = firstToken(eqLines.get(base + 1));
 
                 // Line 3: A op1 B op2 x = Val3
-                String line3 = eqLines.get(2);
+                String line3 = eqLines.get(base + 2);
                 long val3 = parseEndVal(line3);
                 String lhs = line3.substring(0, line3.lastIndexOf('=')).trim();
 

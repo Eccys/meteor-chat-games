@@ -5,8 +5,10 @@ public class ReverseSolver {
         if (input == null || input.isEmpty()) return null;
         String trimmed = input.trim();
         if (trimmed.startsWith("\"") && trimmed.endsWith("\"")) {
+            if (trimmed.length() < 2) return null;
             trimmed = trimmed.substring(1, trimmed.length() - 1);
         }
+        if (trimmed.isEmpty()) return null;
         return new StringBuilder(trimmed).reverse().toString();
     }
 }

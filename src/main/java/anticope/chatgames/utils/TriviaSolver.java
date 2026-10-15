@@ -73,13 +73,13 @@ public class TriviaSolver {
 
     private static String clean(String input) {
         if (input == null) return "";
-        return input.replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase().trim();
+        return input.replaceAll("[^a-zA-Z0-9 ]", "").replaceAll("\\s+", " ").toLowerCase().trim();
     }
 
     public static String solveTrivia(String question) {
         if (question == null) return null;
         String cleanQ = clean(question);
-        
+
         // Prevent false positive matching on short/empty strings
         if (cleanQ.length() < 10) return null;
 
@@ -88,16 +88,23 @@ public class TriviaSolver {
             return TRIVIA_DB.get(cleanQ);
         }
 
-        // Substring match ONLY for long questions (>= 15 chars) to avoid false positives
+        // Substring match ONLY for long questions (>= 15 chars) to avoid false positives,
+        // preferring the longest matching key for specificity
         if (cleanQ.length() >= 15) {
+            String bestAnswer = null;
+            int bestKeyLen = -1;
             for (Map.Entry<String, String> entry : TRIVIA_DB.entrySet()) {
                 String dbKey = entry.getKey();
                 if (dbKey.length() >= 15) {
                     if (cleanQ.contains(dbKey) || dbKey.contains(cleanQ)) {
-                        return entry.getValue();
+                        if (dbKey.length() > bestKeyLen) {
+                            bestKeyLen = dbKey.length();
+                            bestAnswer = entry.getValue();
+                        }
                     }
                 }
             }
+            if (bestAnswer != null) return bestAnswer;
         }
 
         return null;
@@ -106,6 +113,10 @@ public class TriviaSolver {
     public static String solveSort(String scrambled) {
         if (scrambled == null) return null;
         scrambled = scrambled.trim();
+        if (scrambled.startsWith("\"") && scrambled.endsWith("\"")) {
+            if (scrambled.length() < 2) return null;
+            scrambled = scrambled.substring(1, scrambled.length() - 1).trim();
+        }
         if (scrambled.isEmpty()) return null;
 
         // 1. Direct DB lookup
@@ -113,32 +124,56 @@ public class TriviaSolver {
             return SORT_DB.get(scrambled);
         }
 
+        // Detect uppercase character hint (server scrambles capitalized words so the original first letter remains uppercase)
+        Character upperHint = null;
+        boolean anyUpper = false;
+        for (int i = 0; i < scrambled.length(); i++) {
+            char c = scrambled.charAt(i);
+            if (Character.isUpperCase(c)) {
+                anyUpper = true;
+                if (upperHint == null) {
+                    upperHint = Character.toLowerCase(c);
+                }
+            }
+        }
+
         // 2. Anagram solver using embedded word list
         char[] targetChars = scrambled.toLowerCase().toCharArray();
         Arrays.sort(targetChars);
 
+        String fallbackMatch = null;
         for (String word : WORDS_LIST) {
             if (word.length() == scrambled.length()) {
                 char[] wordChars = word.toLowerCase().toCharArray();
                 Arrays.sort(wordChars);
                 if (Arrays.equals(targetChars, wordChars)) {
-                    if (Character.isUpperCase(scrambled.charAt(0))) {
-                        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
+                    String formatted = (anyUpper || Character.isUpperCase(word.charAt(0)))
+                        ? Character.toUpperCase(word.charAt(0)) + word.substring(1)
+                        : word;
+                    if (upperHint != null && Character.toLowerCase(word.charAt(0)) == upperHint) {
+                        return formatted;
                     }
-                    return word;
+                    if (fallbackMatch == null) {
+                        fallbackMatch = formatted;
+                    }
                 }
             }
         }
+        if (fallbackMatch != null) return fallbackMatch;
 
         // 3. Fallback check inside SORT_DB values
         for (Map.Entry<String, String> entry : SORT_DB.entrySet()) {
-            char[] entryChars = entry.getValue().toLowerCase().toCharArray();
-            Arrays.sort(entryChars);
-            if (Arrays.equals(targetChars, entryChars)) {
-                return entry.getValue();
+            String val = entry.getValue();
+            if (val.length() == scrambled.length()) {
+                char[] entryChars = val.toLowerCase().toCharArray();
+                Arrays.sort(entryChars);
+                if (Arrays.equals(targetChars, entryChars)) {
+                    return val;
+                }
             }
         }
 
         return null;
     }
 }
+

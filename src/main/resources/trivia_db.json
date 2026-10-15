@@ -65,7 +65,6 @@
         {"question": "Spanish dish is made with rice", "answer": "Paella"},
 
         {"question": "What type of animal is the \"red panda\"?", "answer": "Mammal"},
-        {"question": "What type of animal is the", "answer": "Mammal"},
         {"question": "red panda", "answer": "Mammal"},
 
         {"question": "Which block allows you to change your respawn point?", "answer": "Bed"},
@@ -90,7 +89,6 @@
         {"question": "founded Microsoft", "answer": "Bill Gates"},
 
         {"question": "Who wrote \"Don Quixote\"?", "answer": "Miguel de Cervantes"},
-        {"question": "Who wrote", "answer": "Miguel de Cervantes"},
         {"question": "Don Quixote", "answer": "Miguel de Cervantes"}
     ],
     "sort": [
@@ -98,8 +96,10 @@
         {"scrambled": "Hlil", "solved": "Hill"},
         {"scrambled": "eaOnrg", "solved": "Orange"},
         {"scrambled": "aCoir", "solved": "Cairo"},
+        {"scrambled": "iCroa", "solved": "Cairo"},
         {"scrambled": "ollnoBa", "solved": "Balloon"},
         {"scrambled": "moRo", "solved": "Room"},
+        {"scrambled": "oDro", "solved": "Door"},
         {"scrambled": "ycCle", "solved": "Cycle"},
         {"scrambled": "dHege", "solved": "Hedge"},
         {"scrambled": "rkBea", "solved": "Brake"},
@@ -107,6 +107,7 @@
         {"scrambled": "eSa", "solved": "Sea"},
         {"scrambled": "gedeH", "solved": "Hedge"},
         {"scrambled": "Plnat", "solved": "Plant"},
-        {"scrambled": "inPe", "solved": "Pine"}
+        {"scrambled": "inPe", "solved": "Pine"},
+        {"scrambled": "iPne", "solved": "Pine"}
     ]
 }

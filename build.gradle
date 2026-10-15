@@ -56,3 +56,15 @@ tasks.withType(JavaCompile).configureEach {
 		 it.options.release = targetVersion
 	}
 }
+
+tasks.register('runSolverTest', JavaExec) {
+	group = 'verification'
+	description = 'Runs the standalone SolverTest suite.'
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = 'anticope.chatgames.SolverTest'
+}
+
+tasks.named('test') {
+	dependsOn tasks.named('runSolverTest')
+}
+

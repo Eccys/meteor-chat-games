@@ -33,26 +33,66 @@ public class FillSolver {
     public static String solveFill(String input) {
         if (input == null || !input.contains("_")) return null;
 
-        // Find the token with underscores (e.g. "__dybug" or "b_n_n_")
-        String[] tokens = input.split("\\s+");
-        String pattern = null;
-        for (String token : tokens) {
-            String cleanToken = token.replaceAll("[^a-zA-Z_]", "");
-            if (cleanToken.contains("_") && cleanToken.length() >= 3) {
-                pattern = cleanToken;
-                break;
+        String[] rawTokens = input.trim().split("\\s+");
+        List<String> cleanTokens = new ArrayList<>();
+        for (String raw : rawTokens) {
+            // Skip speaker prefix tokens (e.g. "Player_1:") or tokens containing digits
+            if (raw.endsWith(":") || raw.matches(".*\\d.*")) {
+                cleanTokens.add("");
+                continue;
+            }
+            cleanTokens.add(raw.replaceAll("[^a-zA-Z_]", ""));
+        }
+
+        // 1. Check multi-word fill patterns first (e.g. "? _ile ca_i_et" -> "File cabinet")
+        for (int i = 0; i < cleanTokens.size() - 1; i++) {
+            String t1 = cleanTokens.get(i);
+            String t2 = cleanTokens.get(i + 1);
+            if (!t1.isEmpty() && !t2.isEmpty() && (t1.contains("_") || t2.contains("_"))) {
+                String combined = t1 + " " + t2;
+                if (hasLetterAndUnderscore(combined)) {
+                    String match = matchPattern(combined);
+                    if (match != null) return match;
+                }
             }
         }
 
-        if (pattern == null) return null;
-        pattern = pattern.toLowerCase();
+        // 2. Check individual tokens containing both '_' and at least one known letter
+        for (String cleanToken : cleanTokens) {
+            if (cleanToken.length() >= 3 && hasLetterAndUnderscore(cleanToken)) {
+                String match = matchPattern(cleanToken);
+                if (match != null) return match;
+            }
+        }
 
+        return null;
+    }
+
+    private static boolean hasLetterAndUnderscore(String s) {
+        boolean hasUnderscore = false;
+        boolean hasLetter = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '_') hasUnderscore = true;
+            else if (Character.isLetter(c)) hasLetter = true;
+        }
+        return hasUnderscore && hasLetter;
+    }
+
+    private static String matchPattern(String pattern) {
+        String lowerPattern = pattern.toLowerCase();
         for (String word : WORDS) {
-            if (word.length() == pattern.length()) {
+            if (word.length() == lowerPattern.length()) {
                 boolean match = true;
-                for (int i = 0; i < pattern.length(); i++) {
-                    char pc = pattern.charAt(i);
-                    if (pc != '_' && pc != word.toLowerCase().charAt(i)) {
+                String lowerWord = word.toLowerCase();
+                for (int i = 0; i < lowerPattern.length(); i++) {
+                    char pc = lowerPattern.charAt(i);
+                    char wc = lowerWord.charAt(i);
+                    if (pc == ' ' && wc != ' ') {
+                        match = false;
+                        break;
+                    }
+                    if (pc != '_' && pc != ' ' && pc != wc) {
                         match = false;
                         break;
                     }
@@ -63,7 +103,7 @@ public class FillSolver {
                 }
             }
         }
-
         return null;
     }
 }
+
